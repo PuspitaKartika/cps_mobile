@@ -1,16 +1,16 @@
 import 'package:cps_mobile/cores/error/failure.dart';
-import 'package:cps_mobile/features/home/data/datasources/user_remote_datasource.dart';
+import 'package:cps_mobile/features/home/data/datasources/home_remote_datasource.dart';
 import 'package:cps_mobile/features/home/data/models/user_model.dart';
-import 'package:cps_mobile/features/home/domain/repositories/user_repository.dart';
+import 'package:cps_mobile/features/home/domain/repositories/home_repository.dart';
 import 'package:multiple_result/multiple_result.dart';
 
 import '../../../../cores/http/network_info.dart';
 
-class UserRepositoryImpl implements UserRepository {
+class HomeRepositoryImpl implements HomeRepository {
   final NetworkInfo networkInfo;
-  final UserRemoteDataSource remoteDataSource;
+  final HomeRemoteDataSource remoteDataSource;
 
-  UserRepositoryImpl(
+  HomeRepositoryImpl(
       {required this.networkInfo, required this.remoteDataSource});
 
   @override

@@ -4,11 +4,11 @@ import 'package:cps_mobile/cores/utils/helper/rest_helper.dart';
 import 'package:cps_mobile/features/home/data/models/user_model.dart';
 import 'package:dio/dio.dart';
 
-abstract class UserRemoteDataSource {
+abstract class HomeRemoteDataSource {
   Future<List<UserModel>> getUserList();
 }
 
-class UserRemoteDataSourceImpl implements UserRemoteDataSource {
+class UserRemoteDataSourceImpl implements HomeRemoteDataSource {
   final RestClient client;
 
   UserRemoteDataSourceImpl({required this.client});

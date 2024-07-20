@@ -3,6 +3,6 @@ import 'package:multiple_result/multiple_result.dart';
 
 import '../../../../cores/error/failure.dart';
 
-abstract class UserRepository {
+abstract class HomeRepository {
   Future<Result<List<UserModel>, Failure>> getUserList();
 }
