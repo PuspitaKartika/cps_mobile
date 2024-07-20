@@ -1,8 +1,6 @@
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
 import 'package:cps_mobile/features/home/data/models/city_model.dart';
-import 'package:cps_mobile/features/home/presentation/bloc/city_list/city_list_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterCity extends StatefulWidget {
   final List<CityModel> items;
@@ -14,11 +12,6 @@ class FilterCity extends StatefulWidget {
 
 class _FilterCityState extends State<FilterCity> {
   String? selectedKota;
-  @override
-  void initState() {
-    super.initState();
-    context.read<CityListBloc>().add(LoadCityList());
-  }
 
   @override
   Widget build(BuildContext context) {
