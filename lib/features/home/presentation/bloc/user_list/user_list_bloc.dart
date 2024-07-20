@@ -13,6 +13,8 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
       : _getListUser = getListUser,
         super(UserListInitial()) {
     on<LoadUserList>(_onLoadUserList);
+    on<SortUserListByAZ>(_onSortUserListByAZ);
+    on<SortUserListByZA>(_onSortUserListByZA);
   }
 
   Future _onLoadUserList(
@@ -29,6 +31,30 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
       });
     } catch (e) {
       emit(UserListError(e.toString()));
+    }
+  }
+
+  void _onSortUserListByAZ(
+    SortUserListByAZ event,
+    Emitter<UserListState> emit,
+  ) {
+    if (state is UserListLoaded) {
+      final users = List<UserModel>.from((state as UserListLoaded).user);
+      users
+          .sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
+      emit(UserListSortAZ(users));
+    }
+  }
+
+  void _onSortUserListByZA(
+    SortUserListByZA event,
+    Emitter<UserListState> emit,
+  ) {
+    if (state is UserListSortAZ) {
+      final users = List<UserModel>.from((state as UserListSortAZ).user);
+      users
+          .sort((a, b) => b.name.toLowerCase().compareTo(a.name.toLowerCase()));
+      emit(UserListSortZA(users));
     }
   }
 }

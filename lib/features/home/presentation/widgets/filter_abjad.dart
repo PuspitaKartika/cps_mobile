@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/user_list/user_list_bloc.dart';
 
 class FilterAbjad extends StatefulWidget {
   const FilterAbjad({super.key});
@@ -14,6 +17,20 @@ class _FilterAbjadState extends State<FilterAbjad> {
     setState(() {
       _clickCount = (_clickCount + 1) % 3;
     });
+    _applyFilter();
+  }
+
+  void _applyFilter() {
+    switch (_clickCount) {
+      case 1:
+        context.read<UserListBloc>().add(SortUserListByAZ());
+        break;
+      case 2:
+        context.read<UserListBloc>().add(SortUserListByZA());
+        break;
+      default:
+        context.read<UserListBloc>().add(LoadUserList());
+    }
   }
 
   @override

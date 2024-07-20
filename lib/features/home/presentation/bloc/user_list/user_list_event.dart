@@ -8,3 +8,7 @@ sealed class UserListEvent extends Equatable {
 }
 
 class LoadUserList extends UserListEvent {}
+
+class SortUserListByAZ extends UserListEvent {}
+
+class SortUserListByZA extends UserListEvent {}

@@ -109,6 +109,24 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Center(
                     child: Text(state.error),
                   );
+                } else if (state is UserListSortAZ) {
+                  return ListView.separated(
+                      itemBuilder: (context, i) => UserCard(
+                            user: state.user[i],
+                          ),
+                      separatorBuilder: (context, i) => const SizedBox(
+                            height: 10,
+                          ),
+                      itemCount: state.user.length);
+                } else if (state is UserListSortZA) {
+                  return ListView.separated(
+                      itemBuilder: (context, i) => UserCard(
+                            user: state.user[i],
+                          ),
+                      separatorBuilder: (context, i) => const SizedBox(
+                            height: 10,
+                          ),
+                      itemCount: state.user.length);
                 } else {
                   return const Center(
                     child: CircularProgressIndicator(),

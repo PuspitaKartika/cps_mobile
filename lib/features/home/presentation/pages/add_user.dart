@@ -1,7 +1,6 @@
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
 import 'package:cps_mobile/cores/utils/validators/form_validator.dart';
 import 'package:cps_mobile/cores/widgets/custom_textfield.dart';
-import 'package:cps_mobile/features/home/presentation/widgets/filter_city_card.dart';
 import 'package:flutter/material.dart';
 
 class AddUserScreen extends StatefulWidget {
