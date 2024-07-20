@@ -1,8 +1,12 @@
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
+import 'package:cps_mobile/features/home/data/models/city_model.dart';
+import 'package:cps_mobile/features/home/presentation/bloc/city_list/city_list_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterCity extends StatefulWidget {
-  const FilterCity({super.key});
+  final List<CityModel> items;
+  const FilterCity({super.key, required this.items});
 
   @override
   State<FilterCity> createState() => _FilterCityState();
@@ -10,13 +14,11 @@ class FilterCity extends StatefulWidget {
 
 class _FilterCityState extends State<FilterCity> {
   String? selectedKota;
-  final List<String> kotaList = [
-    "Jakarta",
-    "Surabaya",
-    "Bandung",
-    "Medan",
-    "Yogyakarta"
-  ];
+  @override
+  void initState() {
+    super.initState();
+    context.read<CityListBloc>().add(LoadCityList());
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,10 +43,10 @@ class _FilterCityState extends State<FilterCity> {
         ),
         icon: const Icon(Icons.arrow_drop_down),
         underline: const SizedBox(),
-        items: kotaList.map((String kota) {
+        items: widget.items.map((CityModel city) {
           return DropdownMenuItem<String>(
-            value: kota,
-            child: Text(kota),
+            value: city.name,
+            child: Text(city.name),
           );
         }).toList(),
         onChanged: (String? newValue) {
@@ -53,7 +55,7 @@ class _FilterCityState extends State<FilterCity> {
           });
         },
         selectedItemBuilder: (BuildContext context) {
-          return kotaList.map((String kota) {
+          return widget.items.map((CityModel kota) {
             return Container(
               alignment: Alignment.centerLeft,
               child: Text(

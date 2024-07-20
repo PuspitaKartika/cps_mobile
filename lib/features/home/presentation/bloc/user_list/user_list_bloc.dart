@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cps_mobile/cores/usecase/usecase.dart';
 import 'package:cps_mobile/features/home/data/models/user_model.dart';
-import 'package:cps_mobile/features/home/domain/usecase/user_usecase.dart';
+import 'package:cps_mobile/features/home/domain/usecase/home_usecase.dart';
 import 'package:equatable/equatable.dart';
 
 part 'user_list_event.dart';

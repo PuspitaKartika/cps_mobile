@@ -1,5 +1,6 @@
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
 import 'package:cps_mobile/cores/widgets/custom_textfield.dart';
+import 'package:cps_mobile/features/home/presentation/bloc/city_list/city_list_bloc.dart';
 import 'package:cps_mobile/features/home/presentation/bloc/user_list/user_list_bloc.dart';
 import 'package:cps_mobile/features/home/presentation/pages/add_user.dart';
 import 'package:cps_mobile/features/home/presentation/widgets/filter_abjad.dart';
@@ -21,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     context.read<UserListBloc>().add(LoadUserList());
+    context.read<CityListBloc>().add(LoadCityList());
   }
 
   @override
@@ -40,13 +42,33 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             SizedBox(
               width: MediaQuery.of(context).size.width,
-              child: const Row(
+              child: Row(
                 children: [
-                  Expanded(child: FilterCity()),
-                  SizedBox(
+                  Expanded(child: BlocBuilder<CityListBloc, CityListState>(
+                    builder: (context, state) {
+                      if (state is CityListLoaded) {
+                        if (state.item.isEmpty) {
+                          return const Center(
+                            child: Text("Kota Kosong"),
+                          );
+                        } else {
+                          return FilterCity(items: state.item);
+                        }
+                      } else if (state is CityListError) {
+                        return const Center(
+                          child: Text("Kota Kosong"),
+                        );
+                      } else {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                    },
+                  )),
+                  const SizedBox(
                     width: 10,
                   ),
-                  Expanded(child: FilterAbjad())
+                  const Expanded(child: FilterAbjad())
                 ],
               ),
             ),
