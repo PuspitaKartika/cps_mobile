@@ -1,4 +1,5 @@
 import 'package:cps_mobile/cores/http/rest_client_impl.dart';
+import 'package:cps_mobile/features/home/presentation/home_injector.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -19,4 +20,7 @@ Future<void> init() async {
   sl.registerLazySingleton(() => InternetConnectionChecker());
   sl.registerLazySingleton(() => Dio());
   sl.registerLazySingleton(() => Logger());
+
+  //home
+  initHome();
 }

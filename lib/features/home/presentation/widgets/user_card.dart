@@ -1,12 +1,16 @@
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
+import 'package:cps_mobile/cores/utils/formatter/capitalize_formatter.dart';
+import 'package:cps_mobile/features/home/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
 class UserCard extends StatelessWidget {
-  const UserCard({super.key});
+  final UserModel user;
+  const UserCard({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 4),
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
             color: Colors.white,
@@ -25,10 +29,10 @@ class UserCard extends StatelessWidget {
             height: 80,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10), color: kPrimaryColor),
-            child: const Center(
+            child: Center(
                 child: Text(
-              "A",
-              style: TextStyle(
+              user.name[0].toUpperCase(),
+              style: const TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
                   fontSize: 36),
@@ -38,14 +42,15 @@ class UserCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
-                  "Aku",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                Text(
+                  CapitalizeFormatter.capitalize(user.name),
+                  style: const TextStyle(
+                      fontSize: 20, fontWeight: FontWeight.bold),
                 ),
-                _tableCustom("Email", "example@gmail.com"),
-                _tableCustom("Nomor Hp", "081123456789"),
-                _tableCustom("Kota", "Tangerang"),
-                _tableCustom("Alamat", "Alamat ini panjang")
+                _tableCustom("Email", user.email),
+                _tableCustom("Nomor Hp", user.phoneNumber),
+                _tableCustom("Kota", user.city),
+                _tableCustom("Alamat", user.address)
               ],
             ),
           ),
