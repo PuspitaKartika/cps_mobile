@@ -5,18 +5,22 @@ import '../bloc/user_list/user_list_bloc.dart';
 
 class FilterAbjadWidget extends StatefulWidget {
   final Function(SortOrder?) onSortOerderChanged;
-  const FilterAbjadWidget({super.key, required this.onSortOerderChanged});
+
+  const FilterAbjadWidget({
+    super.key,
+    required this.onSortOerderChanged,
+  });
 
   @override
   State<FilterAbjadWidget> createState() => _FilterAbjadWidgetState();
 }
 
 class _FilterAbjadWidgetState extends State<FilterAbjadWidget> {
-  int _clickCount = 0;
+  int? _clickCount;
 
   void _toggleOrder() {
     setState(() {
-      _clickCount = (_clickCount + 1) % 3;
+      _clickCount = (_clickCount! + 1) % 3;
     });
     _applyFilter();
   }

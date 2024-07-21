@@ -5,12 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FilterCityWidget extends StatefulWidget {
+  final String? selectedKota;
   final List<CityModel> items;
 
-  const FilterCityWidget({
-    super.key,
-    required this.items,
-  });
+  const FilterCityWidget({super.key, required this.items, this.selectedKota});
 
   @override
   State<FilterCityWidget> createState() => _FilterCityWidgetState();
@@ -18,6 +16,12 @@ class FilterCityWidget extends StatefulWidget {
 
 class _FilterCityWidgetState extends State<FilterCityWidget> {
   String? selectedKota;
+
+  @override
+  void initState() {
+    super.initState();
+    selectedKota = widget.selectedKota;
+  }
 
   @override
   Widget build(BuildContext context) {

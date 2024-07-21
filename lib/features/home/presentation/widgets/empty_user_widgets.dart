@@ -1,8 +1,8 @@
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
 import 'package:flutter/material.dart';
 
-class EmptyUser extends StatelessWidget {
-  const EmptyUser({super.key});
+class EmptyUserWidget extends StatelessWidget {
+  const EmptyUserWidget({super.key});
 
   @override
   Widget build(BuildContext context) {

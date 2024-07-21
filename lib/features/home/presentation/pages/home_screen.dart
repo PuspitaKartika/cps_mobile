@@ -28,10 +28,12 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     context.read<UserListBloc>().add(LoadUserList(searchController.text));
     context.read<CityListBloc>().add(LoadCityList());
+    selectedCity = null;
   }
 
   @override
   void dispose() {
+    searchController.removeListener(_onSearchChanged);
     super.dispose();
     searchController.dispose();
   }
@@ -46,99 +48,112 @@ class _HomeScreenState extends State<HomeScreen> {
     context.read<UserListBloc>().add(LoadUserList(searchController.text));
   }
 
+  Future<void> _refresh() async {
+    setState(() {
+      selectedCity = null;
+    });
+
+    context.read<UserListBloc>().add(LoadUserList(searchController.text));
+    context.read<CityListBloc>().add(LoadCityList());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
-        child: Column(
-          children: [
-            CustomTextField(
-              onChanged: (value) => _onSearchChanged(),
-              controller: searchController,
-              hintText: "Search",
-              icon: const Icon(Icons.search),
-            ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: Row(
-                children: [
-                  Expanded(child: BlocBuilder<CityListBloc, CityListState>(
-                    builder: (context, state) {
-                      if (state is CityListLoaded) {
-                        if (state.item.isEmpty) {
+      body: RefreshIndicator(
+        onRefresh: _refresh,
+        child: Padding(
+          padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+          child: Column(
+            children: [
+              CustomTextField(
+                onChanged: (value) => _onSearchChanged(),
+                controller: searchController,
+                hintText: "Search",
+                icon: const Icon(Icons.search),
+              ),
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                child: Row(
+                  children: [
+                    Expanded(child: BlocBuilder<CityListBloc, CityListState>(
+                      builder: (context, state) {
+                        if (state is CityListLoaded) {
+                          if (state.item.isEmpty) {
+                            return const Center(
+                              child: Text("Kota Kosong"),
+                            );
+                          } else {
+                            return FilterCityWidget(
+                              items: state.item,
+                              selectedKota: selectedCity,
+                            );
+                          }
+                        } else if (state is CityListError) {
                           return const Center(
                             child: Text("Kota Kosong"),
                           );
                         } else {
-                          return FilterCityWidget(
-                            items: state.item,
+                          return const Center(
+                            child: CircularProgressIndicator(),
                           );
                         }
-                      } else if (state is CityListError) {
-                        return const Center(
-                          child: Text("Kota Kosong"),
-                        );
+                      },
+                    )),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Expanded(child: FilterAbjadWidget(
+                      onSortOerderChanged: (sortOrder) {
+                        setState(() {
+                          selectedSortOrder = sortOrder;
+                          _loadUserList();
+                        });
+                      },
+                    ))
+                  ],
+                ),
+              ),
+              Expanded(
+                child: BlocBuilder<UserListBloc, UserListState>(
+                  builder: (context, state) {
+                    if (state is UserListLoading) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else if (state is UserListError) {
+                      return Center(
+                        child: Text(state.error),
+                      );
+                    } else if (state is UserListLoaded) {
+                      if (state.user.isEmpty) {
+                        return const EmptyUserWidget();
                       } else {
-                        return const Center(
-                          child: CircularProgressIndicator(),
+                        return UserListWidget(
+                          users: state.user,
                         );
                       }
-                    },
-                  )),
-                  const SizedBox(
-                    width: 10,
-                  ),
-                  Expanded(child: FilterAbjadWidget(
-                    onSortOerderChanged: (sortOrder) {
-                      setState(() {
-                        selectedSortOrder = sortOrder;
-                        _loadUserList();
-                      });
-                    },
-                  ))
-                ],
+                    } else if (state is UserFilterByCity) {
+                      if (state.user.isEmpty) {
+                        return const EmptyUserWidget();
+                      } else {
+                        return UserListWidget(users: state.user);
+                      }
+                    } else if (state is UserListSearch) {
+                      if (state.user.isEmpty) {
+                        return const EmptyUserWidget();
+                      } else {
+                        return UserListWidget(users: state.user);
+                      }
+                    }
+                    return const SizedBox();
+                  },
+                ),
               ),
-            ),
-            Expanded(
-              child: BlocBuilder<UserListBloc, UserListState>(
-                builder: (context, state) {
-                  if (state is UserListLoading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  } else if (state is UserListError) {
-                    return Center(
-                      child: Text(state.error),
-                    );
-                  } else if (state is UserListLoaded) {
-                    if (state.user.isEmpty) {
-                      return const EmptyUserWidget();
-                    } else {
-                      return UserListWidget(
-                        users: state.user,
-                      );
-                    }
-                  } else if (state is UserFilterByCity) {
-                    if (state.user.isEmpty) {
-                      return const EmptyUserWidget();
-                    } else {
-                      return UserListWidget(users: state.user);
-                    }
-                  } else if (state is UserListSearch) {
-                    if (state.user.isEmpty) {
-                      return const EmptyUserWidget();
-                    } else {
-                      return UserListWidget(users: state.user);
-                    }
-                  }
-                  return const SizedBox();
-                },
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(

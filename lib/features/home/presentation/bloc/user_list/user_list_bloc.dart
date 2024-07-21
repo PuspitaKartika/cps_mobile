@@ -28,7 +28,7 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
       result.when((data) async {
         originalUserList = data;
         emit(UserListLoaded(data));
-        searchUserList = data
+        searchUserList = originalUserList
             .where((element) =>
                 (element.name
                     .toLowerCase()
