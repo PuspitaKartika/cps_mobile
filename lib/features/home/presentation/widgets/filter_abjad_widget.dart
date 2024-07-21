@@ -3,15 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/user_list/user_list_bloc.dart';
 
-class FilterAbjad extends StatefulWidget {
+class FilterAbjadWidget extends StatefulWidget {
   final Function(SortOrder?) onSortOerderChanged;
-  const FilterAbjad({super.key, required this.onSortOerderChanged});
+  const FilterAbjadWidget({super.key, required this.onSortOerderChanged});
 
   @override
-  State<FilterAbjad> createState() => _FilterAbjadState();
+  State<FilterAbjadWidget> createState() => _FilterAbjadWidgetState();
 }
 
-class _FilterAbjadState extends State<FilterAbjad> {
+class _FilterAbjadWidgetState extends State<FilterAbjadWidget> {
   int _clickCount = 0;
 
   void _toggleOrder() {

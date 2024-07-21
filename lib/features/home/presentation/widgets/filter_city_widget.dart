@@ -4,19 +4,19 @@ import 'package:cps_mobile/features/home/presentation/bloc/user_list/user_list_b
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class FilterCity extends StatefulWidget {
+class FilterCityWidget extends StatefulWidget {
   final List<CityModel> items;
 
-  const FilterCity({
+  const FilterCityWidget({
     super.key,
     required this.items,
   });
 
   @override
-  State<FilterCity> createState() => _FilterCityState();
+  State<FilterCityWidget> createState() => _FilterCityWidgetState();
 }
 
-class _FilterCityState extends State<FilterCity> {
+class _FilterCityWidgetState extends State<FilterCityWidget> {
   String? selectedKota;
 
   @override

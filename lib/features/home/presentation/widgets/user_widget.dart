@@ -3,9 +3,9 @@ import 'package:cps_mobile/cores/utils/formatter/capitalize_formatter.dart';
 import 'package:cps_mobile/features/home/data/models/user_model.dart';
 import 'package:flutter/material.dart';
 
-class UserCard extends StatelessWidget {
+class UserWidget extends StatelessWidget {
   final UserModel user;
-  const UserCard({super.key, required this.user});
+  const UserWidget({super.key, required this.user});
 
   @override
   Widget build(BuildContext context) {

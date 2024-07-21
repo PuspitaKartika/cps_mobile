@@ -1,12 +1,12 @@
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
 import 'package:cps_mobile/cores/widgets/custom_textfield.dart';
-import 'package:cps_mobile/features/home/data/models/user_model.dart';
 import 'package:cps_mobile/features/home/presentation/bloc/city_list/city_list_bloc.dart';
 import 'package:cps_mobile/features/home/presentation/bloc/user_list/user_list_bloc.dart';
 import 'package:cps_mobile/features/home/presentation/pages/add_user.dart';
-import 'package:cps_mobile/features/home/presentation/widgets/filter_abjad.dart';
-import 'package:cps_mobile/features/home/presentation/widgets/filter_city_card.dart';
-import 'package:cps_mobile/features/home/presentation/widgets/user_card.dart';
+import 'package:cps_mobile/features/home/presentation/widgets/empty_user_widgets.dart';
+import 'package:cps_mobile/features/home/presentation/widgets/filter_abjad_widget.dart';
+import 'package:cps_mobile/features/home/presentation/widgets/filter_city_widget.dart';
+import 'package:cps_mobile/features/home/presentation/widgets/user_list_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/route_manager.dart';
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text("Kota Kosong"),
                           );
                         } else {
-                          return FilterCity(
+                          return FilterCityWidget(
                             items: state.item,
                           );
                         }
@@ -91,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   const SizedBox(
                     width: 10,
                   ),
-                  Expanded(child: FilterAbjad(
+                  Expanded(child: FilterAbjadWidget(
                     onSortOerderChanged: (sortOrder) {
                       setState(() {
                         selectedSortOrder = sortOrder;
@@ -115,21 +115,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     );
                   } else if (state is UserListLoaded) {
                     if (state.user.isEmpty) {
-                      return _emptyState();
+                      return const EmptyUserWidget();
                     } else {
-                      return _userList(state.user);
+                      return UserListWidget(
+                        users: state.user,
+                      );
                     }
                   } else if (state is UserFilterByCity) {
                     if (state.user.isEmpty) {
-                      return _emptyState();
+                      return const EmptyUserWidget();
                     } else {
-                      return _userList(state.user);
+                      return UserListWidget(users: state.user);
                     }
                   } else if (state is UserListSearch) {
                     if (state.user.isEmpty) {
-                      return _emptyState();
+                      return const EmptyUserWidget();
                     } else {
-                      return _userList(state.user);
+                      return UserListWidget(users: state.user);
                     }
                   }
                   return const SizedBox();
@@ -151,37 +153,4 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     ));
   }
-}
-
-Widget _emptyState() {
-  return Center(
-    child: Column(
-      children: [
-        Image.asset(
-          "assets/image.png",
-          width: 144,
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        const Text(
-          textAlign: TextAlign.center,
-          "Data kosong!!!, \nTambahkan data user",
-          style: TextStyle(color: kPrimaryColor),
-        )
-      ],
-    ),
-  );
-}
-
-Widget _userList(List<UserModel> users) {
-  return ListView.separated(
-    itemBuilder: (context, i) => UserCard(
-      user: users[i],
-    ),
-    separatorBuilder: (context, i) => const SizedBox(
-      height: 10,
-    ),
-    itemCount: users.length,
-  );
 }
