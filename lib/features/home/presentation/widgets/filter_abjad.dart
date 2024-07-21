@@ -4,7 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/user_list/user_list_bloc.dart';
 
 class FilterAbjad extends StatefulWidget {
-  const FilterAbjad({super.key});
+  final Function(SortOrder?) onSortOerderChanged;
+  const FilterAbjad({super.key, required this.onSortOerderChanged});
 
   @override
   State<FilterAbjad> createState() => _FilterAbjadState();
@@ -23,10 +24,10 @@ class _FilterAbjadState extends State<FilterAbjad> {
   void _applyFilter() {
     switch (_clickCount) {
       case 1:
-        context.read<UserListBloc>().add(SortUserListByAZ());
+        widget.onSortOerderChanged(SortOrder.AZ);
         break;
       case 2:
-        context.read<UserListBloc>().add(SortUserListByZA());
+        widget.onSortOerderChanged(SortOrder.ZA);
         break;
       default:
         context.read<UserListBloc>().add(LoadUserList());

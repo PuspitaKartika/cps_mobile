@@ -26,6 +26,11 @@ final class UserListSortZA extends UserListState {
   const UserListSortZA(this.user);
 }
 
+final class UserFilterByCity extends UserListState {
+  final List<UserModel> user;
+  const UserFilterByCity(this.user);
+}
+
 final class UserListError extends UserListState {
   final String error;
   const UserListError(this.error);

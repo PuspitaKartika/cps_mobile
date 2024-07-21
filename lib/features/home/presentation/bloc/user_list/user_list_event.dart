@@ -1,5 +1,8 @@
 part of 'user_list_bloc.dart';
 
+// ignore: constant_identifier_names
+enum SortOrder { AZ, ZA }
+
 sealed class UserListEvent extends Equatable {
   const UserListEvent();
 
@@ -12,3 +15,19 @@ class LoadUserList extends UserListEvent {}
 class SortUserListByAZ extends UserListEvent {}
 
 class SortUserListByZA extends UserListEvent {}
+
+class FilterUserListByCity extends UserListEvent {
+  final String city;
+
+  const FilterUserListByCity(this.city);
+
+  @override
+  List<Object> get props => [city];
+}
+
+class SortAndFilterUserList extends UserListEvent {
+  final String? city;
+  final SortOrder? sortOrder;
+
+  const SortAndFilterUserList({this.city, this.sortOrder});
+}
