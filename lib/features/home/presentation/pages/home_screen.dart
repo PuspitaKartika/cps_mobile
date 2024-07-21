@@ -30,8 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void _loadUserList() {
     context.read<UserListBloc>().add(
-          SortAndFilterUserList(
-              city: selectedCity, sortOrder: selectedSortOrder),
+          SortAndFilterUserList(sortOrder: selectedSortOrder),
         );
   }
 
@@ -62,7 +61,9 @@ class _HomeScreenState extends State<HomeScreen> {
                             child: Text("Kota Kosong"),
                           );
                         } else {
-                          return FilterCity(items: state.item);
+                          return FilterCity(
+                            items: state.item,
+                          );
                         }
                       } else if (state is CityListError) {
                         return const Center(
@@ -106,105 +107,17 @@ class _HomeScreenState extends State<HomeScreen> {
                     return Center(
                       child: Text(state.error),
                     );
-                  } else {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                  } else if (state is UserFilterByCity) {
+                    if (state.user.isEmpty) {
+                      return _emptyState();
+                    } else {
+                      return _userList(state.user);
+                    }
                   }
+                  return const SizedBox();
                 },
               ),
             ),
-            // Expanded(
-            //   child: BlocBuilder<UserListBloc, UserListState>(
-            //       builder: (context, state) {
-            //     if (state is UserListLoaded) {
-            //       if (state.user.isEmpty) {
-            //         return Center(
-            //           child: Column(
-            //             children: [
-            //               Image.asset(
-            //                 "assets/image.png",
-            //                 width: 144,
-            //               ),
-            //               const SizedBox(
-            //                 height: 20,
-            //               ),
-            //               const Text(
-            //                 textAlign: TextAlign.center,
-            //                 "Data kosong!!!, \nTambahkan data user",
-            //                 style: TextStyle(color: kPrimaryColor),
-            //               )
-            //             ],
-            //           ),
-            //         );
-            //       } else {
-            //         return ListView.separated(
-            //             itemBuilder: (context, i) => UserCard(
-            //                   user: state.user[i],
-            //                 ),
-            //             separatorBuilder: (context, i) => const SizedBox(
-            //                   height: 10,
-            //                 ),
-            //             itemCount: state.user.length);
-            //       }
-            //     } else if (state is UserListError) {
-            //       return Center(
-            //         child: Text(state.error),
-            //       );
-            //     } else if (state is UserListSortAZ) {
-            //       return ListView.separated(
-            //           itemBuilder: (context, i) => UserCard(
-            //                 user: state.user[i],
-            //               ),
-            //           separatorBuilder: (context, i) => const SizedBox(
-            //                 height: 10,
-            //               ),
-            //           itemCount: state.user.length);
-            //     } else if (state is UserListSortZA) {
-            //       return ListView.separated(
-            //           itemBuilder: (context, i) => UserCard(
-            //                 user: state.user[i],
-            //               ),
-            //           separatorBuilder: (context, i) => const SizedBox(
-            //                 height: 10,
-            //               ),
-            //           itemCount: state.user.length);
-            //     } else if (state is UserFilterByCity) {
-            //       if (state.user.isEmpty) {
-            //         return Center(
-            //           child: Column(
-            //             mainAxisAlignment: MainAxisAlignment.center,
-            //             children: [
-            //               Image.asset(
-            //                 "assets/image.png",
-            //                 width: 144,
-            //               ),
-            //               const SizedBox(height: 20),
-            //               const Text(
-            //                 textAlign: TextAlign.center,
-            //                 "Data kosong!!!, \nTambahkan data user",
-            //                 style: TextStyle(color: kPrimaryColor),
-            //               ),
-            //             ],
-            //           ),
-            //         );
-            //       } else {
-            //         return ListView.separated(
-            //             itemBuilder: (context, i) => UserCard(
-            //                   user: state.user[i],
-            //                 ),
-            //             separatorBuilder: (context, i) => const SizedBox(
-            //                   height: 10,
-            //                 ),
-            //             itemCount: state.user.length);
-            //       }
-            //     } else {
-            //       return const Center(
-            //         child: CircularProgressIndicator(),
-            //       );
-            //     }
-            //   }),
-            // )
           ],
         ),
       ),

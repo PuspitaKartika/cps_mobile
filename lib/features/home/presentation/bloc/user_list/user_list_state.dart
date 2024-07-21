@@ -16,16 +16,6 @@ final class UserListLoaded extends UserListState {
   const UserListLoaded(this.user);
 }
 
-final class UserListSortAZ extends UserListState {
-  final List<UserModel> user;
-  const UserListSortAZ(this.user);
-}
-
-final class UserListSortZA extends UserListState {
-  final List<UserModel> user;
-  const UserListSortZA(this.user);
-}
-
 final class UserFilterByCity extends UserListState {
   final List<UserModel> user;
   const UserFilterByCity(this.user);

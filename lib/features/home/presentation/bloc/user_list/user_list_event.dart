@@ -12,10 +12,6 @@ sealed class UserListEvent extends Equatable {
 
 class LoadUserList extends UserListEvent {}
 
-class SortUserListByAZ extends UserListEvent {}
-
-class SortUserListByZA extends UserListEvent {}
-
 class FilterUserListByCity extends UserListEvent {
   final String city;
 
@@ -26,8 +22,7 @@ class FilterUserListByCity extends UserListEvent {
 }
 
 class SortAndFilterUserList extends UserListEvent {
-  final String? city;
   final SortOrder? sortOrder;
 
-  const SortAndFilterUserList({this.city, this.sortOrder});
+  const SortAndFilterUserList({this.sortOrder});
 }
