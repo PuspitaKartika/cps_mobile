@@ -10,19 +10,21 @@ sealed class UserListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadUserList extends UserListEvent {}
-
-class FilterUserListByCity extends UserListEvent {
-  final String city;
-
-  const FilterUserListByCity(this.city);
-
-  @override
-  List<Object> get props => [city];
+class LoadUserList extends UserListEvent {
+  final String? query;
+  const LoadUserList(this.query);
 }
 
 class SortAndFilterUserList extends UserListEvent {
   final SortOrder? sortOrder;
 
   const SortAndFilterUserList({this.sortOrder});
+}
+
+class SearchUserList extends UserListEvent {
+  final String query;
+  const SearchUserList({required this.query});
+
+  @override
+  List<Object> get props => [query];
 }

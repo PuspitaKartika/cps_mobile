@@ -19,13 +19,21 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController searchController = TextEditingController();
+
   String? selectedCity;
   SortOrder? selectedSortOrder;
   @override
   void initState() {
     super.initState();
-    context.read<UserListBloc>().add(LoadUserList());
+    context.read<UserListBloc>().add(LoadUserList(searchController.text));
     context.read<CityListBloc>().add(LoadCityList());
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    searchController.dispose();
   }
 
   void _loadUserList() {
@@ -34,9 +42,12 @@ class _HomeScreenState extends State<HomeScreen> {
         );
   }
 
+  void _onSearchChanged() {
+    context.read<UserListBloc>().add(LoadUserList(searchController.text));
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController searchController = TextEditingController();
     return SafeArea(
         child: Scaffold(
       backgroundColor: Colors.white,
@@ -45,6 +56,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             CustomTextField(
+              onChanged: (value) => _onSearchChanged(),
               controller: searchController,
               hintText: "Search",
               icon: const Icon(Icons.search),
@@ -97,17 +109,23 @@ class _HomeScreenState extends State<HomeScreen> {
                     return const Center(
                       child: CircularProgressIndicator(),
                     );
+                  } else if (state is UserListError) {
+                    return Center(
+                      child: Text(state.error),
+                    );
                   } else if (state is UserListLoaded) {
                     if (state.user.isEmpty) {
                       return _emptyState();
                     } else {
                       return _userList(state.user);
                     }
-                  } else if (state is UserListError) {
-                    return Center(
-                      child: Text(state.error),
-                    );
                   } else if (state is UserFilterByCity) {
+                    if (state.user.isEmpty) {
+                      return _emptyState();
+                    } else {
+                      return _userList(state.user);
+                    }
+                  } else if (state is UserListSearch) {
                     if (state.user.isEmpty) {
                       return _emptyState();
                     } else {

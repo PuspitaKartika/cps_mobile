@@ -51,8 +51,8 @@ class _FilterCityState extends State<FilterCity> {
         onChanged: (String? newValue) {
           setState(() {
             selectedKota = newValue;
-            context.read<UserListBloc>().add(FilterUserListByCity(newValue!));
           });
+          context.read<UserListBloc>().add(LoadUserList(newValue));
         },
         selectedItemBuilder: (BuildContext context) {
           return widget.items.map((CityModel kota) {

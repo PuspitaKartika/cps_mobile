@@ -10,12 +10,12 @@ part 'user_list_state.dart';
 class UserListBloc extends Bloc<UserListEvent, UserListState> {
   final GetListUser _getListUser;
   List<UserModel> originalUserList = [];
+  List<UserModel> searchUserList = [];
   UserListBloc({required GetListUser getListUser})
       : _getListUser = getListUser,
         super(UserListInitial()) {
     on<LoadUserList>(_onLoadUserList);
     on<SortAndFilterUserList>(_onSortAndFilterUserList);
-    on<FilterUserListByCity>(_onFilterByCity);
   }
 
   Future _onLoadUserList(
@@ -28,6 +28,16 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
       result.when((data) async {
         originalUserList = data;
         emit(UserListLoaded(data));
+        searchUserList = data
+            .where((element) =>
+                (element.name
+                    .toLowerCase()
+                    .contains(event.query?.toLowerCase() ?? "")) ||
+                (element.city
+                    .toLowerCase()
+                    .contains(event.query?.toLowerCase() ?? "")))
+            .toList();
+        emit(UserListSearch(searchUserList));
       }, (error) async {
         emit(UserListError(error.message));
       });
@@ -50,17 +60,5 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
     }
 
     emit(UserListLoaded(filteredList));
-  }
-
-  void _onFilterByCity(
-    FilterUserListByCity event,
-    Emitter<UserListState> emit,
-  ) {
-    List<UserModel> filteredList = originalUserList;
-
-    final filteredUsers = filteredList
-        .where((user) => user.city.toLowerCase() == event.city.toLowerCase())
-        .toList();
-    emit(UserFilterByCity(filteredUsers));
   }
 }

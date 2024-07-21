@@ -25,3 +25,8 @@ final class UserListError extends UserListState {
   final String error;
   const UserListError(this.error);
 }
+
+final class UserListSearch extends UserListState {
+  final List<UserModel> user;
+  const UserListSearch(this.user);
+}

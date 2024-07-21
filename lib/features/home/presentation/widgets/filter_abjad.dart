@@ -30,7 +30,7 @@ class _FilterAbjadState extends State<FilterAbjad> {
         widget.onSortOerderChanged(SortOrder.ZA);
         break;
       default:
-        context.read<UserListBloc>().add(LoadUserList());
+        context.read<UserListBloc>().add(const LoadUserList(""));
     }
   }
 

@@ -8,7 +8,7 @@ class CustomTextField extends StatelessWidget {
   final Icon? icon;
   final TextInputType? keyboardType;
   final String? Function(String?)? validator;
-  final String? Function(String?)? onChanged;
+  final Function(String)? onChanged;
   final int? maxLines;
   const CustomTextField(
       {super.key,
