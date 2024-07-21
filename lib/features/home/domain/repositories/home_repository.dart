@@ -7,4 +7,5 @@ import '../../../../cores/error/failure.dart';
 abstract class HomeRepository {
   Future<Result<List<UserModel>, Failure>> getUserList();
   Future<Result<List<CityModel>, Failure>> getCityList();
+  Future<Result<UserModel, Failure>> addUser(UserModel payload);
 }

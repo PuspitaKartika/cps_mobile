@@ -4,7 +4,7 @@ class UserModel {
   String email;
   String phoneNumber;
   String city;
-  String id;
+  String? id;
   String? query;
 
   UserModel({
@@ -13,7 +13,7 @@ class UserModel {
     required this.email,
     required this.phoneNumber,
     required this.city,
-    required this.id,
+    this.id,
     this.query,
   });
 

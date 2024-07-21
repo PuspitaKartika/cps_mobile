@@ -96,14 +96,6 @@ class RestHelper {
     }
   }
 
-  static Failure throwGoogleLoginError({required Map<String, dynamic> error}) {
-    return Failure(
-      type: FailureType.serverError,
-      apiStatus: 0,
-      message: error["data"]["errors"][0]["message"] ?? LOCAL_ERROR,
-    );
-  }
-
   static Failure throwServerError(Response response) {
     return Failure(
       type: FailureType.serverError,

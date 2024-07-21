@@ -24,3 +24,13 @@ class GetCityList implements UseCase<List<CityModel>, NoParams> {
     return await repository.getCityList();
   }
 }
+
+class AddUser implements UseCase<UserModel, UserModel> {
+  final HomeRepository repository;
+  AddUser(this.repository);
+
+  @override
+  Future<Result<UserModel, Failure>> call(UserModel payload) async {
+    return await repository.addUser(payload);
+  }
+}

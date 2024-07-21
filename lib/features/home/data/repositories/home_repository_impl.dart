@@ -41,4 +41,18 @@ class HomeRepositoryImpl implements HomeRepository {
       return const Error(NoConnection());
     }
   }
+
+  @override
+  Future<Result<UserModel, Failure>> addUser(UserModel payload) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final data = await remoteDataSource.addUser(payload);
+        return Success(data);
+      } on Failure catch (failure) {
+        return Error(failure);
+      }
+    } else {
+      return const Error(NoConnection());
+    }
+  }
 }
