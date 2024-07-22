@@ -1,7 +1,7 @@
 import 'package:cps_mobile/cores/bloc/ser_morpheus_obverser.dart';
+import 'package:cps_mobile/cores/routes/app_pages.dart';
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
 import 'package:cps_mobile/cores/utils/helper/providers.dart';
-import 'package:cps_mobile/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
@@ -22,12 +22,14 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: providers,
       child: GetMaterialApp(
-          title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: kPrimaryColor),
-            useMaterial3: true,
-          ),
-          home: const HomeScreen()),
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: kPrimaryColor),
+          useMaterial3: true,
+        ),
+        initialRoute: AppPages.INITIAL,
+        getPages: AppPages.routes,
+      ),
     );
   }
 }

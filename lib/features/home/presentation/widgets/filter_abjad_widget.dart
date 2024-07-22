@@ -16,11 +16,11 @@ class FilterAbjadWidget extends StatefulWidget {
 }
 
 class _FilterAbjadWidgetState extends State<FilterAbjadWidget> {
-  int? _clickCount;
+  int _clickCount = 0;
 
   void _toggleOrder() {
     setState(() {
-      _clickCount = (_clickCount! + 1) % 3;
+      _clickCount = (_clickCount + 1) % 3;
     });
     _applyFilter();
   }

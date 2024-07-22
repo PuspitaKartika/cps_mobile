@@ -1,8 +1,8 @@
+import 'package:cps_mobile/cores/routes/app_pages.dart';
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
 import 'package:cps_mobile/cores/utils/validators/form_validator.dart';
 import 'package:cps_mobile/cores/widgets/custom_textfield.dart';
 import 'package:cps_mobile/features/home/data/models/user_model.dart';
-import 'package:cps_mobile/features/home/presentation/pages/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/route_manager.dart';
@@ -55,7 +55,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 content: Text("Yeay!!! Berhasil menambahkan data"),
               ),
             );
-            Get.to(const HomeScreen());
+            Get.toNamed(Routes.HOME);
           } else if (state is AddUserError) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(

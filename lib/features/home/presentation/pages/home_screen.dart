@@ -1,8 +1,8 @@
+import 'package:cps_mobile/cores/routes/app_pages.dart';
 import 'package:cps_mobile/cores/utils/constant/colors.dart';
 import 'package:cps_mobile/cores/widgets/custom_textfield.dart';
 import 'package:cps_mobile/features/home/presentation/bloc/city_list/city_list_bloc.dart';
 import 'package:cps_mobile/features/home/presentation/bloc/user_list/user_list_bloc.dart';
-import 'package:cps_mobile/features/home/presentation/pages/add_user.dart';
 import 'package:cps_mobile/features/home/presentation/widgets/empty_user_widgets.dart';
 import 'package:cps_mobile/features/home/presentation/widgets/filter_abjad_widget.dart';
 import 'package:cps_mobile/features/home/presentation/widgets/filter_city_widget.dart';
@@ -159,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: kPrimaryColor,
         onPressed: () {
-          Get.to(const AddUserScreen());
+          Get.toNamed(Routes.ADD_USER);
         },
         child: const Text(
           "+",
