@@ -2,6 +2,9 @@
 
 CPS Mobile adalah aplikasi resource data user Accurate yang dapat menampilkan daftar pengguna, mencari user yang diinginkan, mengurutkan user berdasarkan nama, memfilter user berdasarkan kota dan menambahkan user.
 
+https://github.com/user-attachments/assets/2bb7d01c-3318-4684-940a-518dcc84d769
+
+
 ## Cara penggunaan aplikasi
 Pertama kali menggunakan aplikasi, pengguna akan masuk ke halaman utama yang menampilkan daftar user. adapun fitur pada halaman utama :  
 1. Terdapat filter kota yang digunakan untuk mencari user berdasarkan kota. 
