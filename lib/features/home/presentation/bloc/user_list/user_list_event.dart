@@ -10,10 +10,7 @@ sealed class UserListEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class LoadUserList extends UserListEvent {
-  final String? query;
-  const LoadUserList(this.query);
-}
+class LoadUserList extends UserListEvent {}
 
 class SortAndFilterUserList extends UserListEvent {
   final SortOrder? sortOrder;

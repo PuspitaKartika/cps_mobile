@@ -26,8 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    context.read<UserListBloc>().add(LoadUserList(searchController.text));
+    context.read<UserListBloc>().add(LoadUserList());
     context.read<CityListBloc>().add(LoadCityList());
+    searchController.addListener(_onSearchChanged);
+
     selectedCity = null;
   }
 
@@ -45,15 +47,18 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   void _onSearchChanged() {
-    context.read<UserListBloc>().add(LoadUserList(searchController.text));
+    context
+        .read<UserListBloc>()
+        .add(SearchUserList(query: searchController.text));
   }
 
   Future<void> _refresh() async {
     setState(() {
       selectedCity = null;
+      searchController.clear();
     });
 
-    context.read<UserListBloc>().add(LoadUserList(searchController.text));
+    context.read<UserListBloc>().add(LoadUserList());
     context.read<CityListBloc>().add(LoadCityList());
   }
 
@@ -127,25 +132,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       return Center(
                         child: Text(state.error),
                       );
-                    } else if (state is UserListLoaded) {
-                      if (state.user.isEmpty) {
+                    } else if (state is UserListLoaded ||
+                        state is UserFilterByCity ||
+                        state is UserListSearch) {
+                      final users = (state is UserListLoaded)
+                          ? state.user
+                          : (state as dynamic).user;
+                      if (users.isEmpty) {
                         return const EmptyUserWidget();
                       } else {
-                        return UserListWidget(
-                          users: state.user,
-                        );
-                      }
-                    } else if (state is UserFilterByCity) {
-                      if (state.user.isEmpty) {
-                        return const EmptyUserWidget();
-                      } else {
-                        return UserListWidget(users: state.user);
-                      }
-                    } else if (state is UserListSearch) {
-                      if (state.user.isEmpty) {
-                        return const EmptyUserWidget();
-                      } else {
-                        return UserListWidget(users: state.user);
+                        return UserListWidget(users: users);
                       }
                     }
                     return const SizedBox();
