@@ -48,7 +48,7 @@ Setiap field input dilengkapi dengan validasi yang jelas, memastikan pengguna me
 https://github.com/PuspitaKartika/cps_mobile.git
 ```
 2. Open folder cps-mobile with VSCode or Android Studio
-3. 3. Install Dependencies
+3. Install Dependencies
 ```markdown
 flutter pub get
 ```
