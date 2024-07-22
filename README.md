@@ -45,7 +45,7 @@ Setiap field input dilengkapi dengan validasi yang jelas, memastikan pengguna me
 ## Steps to run the application
 1. Clone the Repository 
 ```markdown
-https://github.com/PuspitaKartika/cps_mobile.git
+git clone https://github.com/PuspitaKartika/cps_mobile.git
 ```
 2. Open folder cps-mobile with VSCode or Android Studio
 3. Install Dependencies
