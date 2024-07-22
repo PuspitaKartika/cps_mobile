@@ -23,6 +23,16 @@ class _AddUserScreenState extends State<AddUserScreen> {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController cityController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
+  bool isFormValid = false;
+  @override
+  void initState() {
+    super.initState();
+    nameController.addListener(_validateForm);
+    emailController.addListener(_validateForm);
+    phoneController.addListener(_validateForm);
+    cityController.addListener(_validateForm);
+    addressController.addListener(_validateForm);
+  }
 
   @override
   void dispose() {
@@ -32,6 +42,12 @@ class _AddUserScreenState extends State<AddUserScreen> {
     cityController.dispose();
     addressController.dispose();
     super.dispose();
+  }
+
+  void _validateForm() {
+    setState(() {
+      isFormValid = _formKey.currentState?.validate() ?? false;
+    });
   }
 
   @override
@@ -55,7 +71,7 @@ class _AddUserScreenState extends State<AddUserScreen> {
                 content: Text("Yeay!!! Berhasil menambahkan data"),
               ),
             );
-            Get.toNamed(Routes.HOME);
+            Get.offNamed(Routes.HOME);
           } else if (state is AddUserError) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(
@@ -157,18 +173,20 @@ class _AddUserScreenState extends State<AddUserScreen> {
                     child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             backgroundColor: kPrimaryColor),
-                        onPressed: () {
-                          UserModel payload = UserModel(
-                              name: nameController.text,
-                              address: addressController.text,
-                              email: emailController.text,
-                              phoneNumber: phoneController.text,
-                              city: cityController.text);
+                        onPressed: isFormValid
+                            ? () {
+                                UserModel payload = UserModel(
+                                    name: nameController.text,
+                                    address: addressController.text,
+                                    email: emailController.text,
+                                    phoneNumber: phoneController.text,
+                                    city: cityController.text);
 
-                          context
-                              .read<AddUserBloc>()
-                              .add(DoAddUser(payload: payload));
-                        },
+                                context
+                                    .read<AddUserBloc>()
+                                    .add(DoAddUser(payload: payload));
+                              }
+                            : null,
                         child: const Text(
                           "SIMPAN",
                           style: TextStyle(
