@@ -43,16 +43,16 @@ Setiap field input dilengkapi dengan validasi yang jelas, memastikan pengguna me
 5. Implementasi Get_it sebagai dependency injection
 
 ## Steps to run the application
-### 1. Clone the Repository 
+1. Clone the Repository 
 ```markdown
 https://github.com/PuspitaKartika/cps_mobile.git
 ```
-### 2. Open folder cps-mobile with VSCode or Android Studio
-### 3. Install Dependencies
+2. Open folder cps-mobile with VSCode or Android Studio
+3. 3. Install Dependencies
 ```markdown
 flutter pub get
 ```
-### 4. Run Application
+4. Run Application
 ```markdown
 flutter run
 ```
